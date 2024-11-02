@@ -6,8 +6,8 @@ const App = () => {
     const createCookie=async()=>{
       await setCookie("credential",{
         name:"alireza",
-        access_token:"bjhjkhbbnbjhuhjn87j",
-        refresh_token:"jhjhjhghftf8778787"
+        access_token:"alskjasdasd4asd",
+        refresh_token:"a6sd4as6d4a5sd"
       })
     }
     createCookie();
