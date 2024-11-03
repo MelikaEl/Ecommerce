@@ -2,11 +2,12 @@
 // import {  setCookie } from './utils/helpers/cookie';
 // import { getCookie } from './utils/helpers/cookie';
 
+import { useStore } from "zustand";
+
+
+
 const App = () => {
-
-
-
-
+  const { access_token } = useStore();
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
@@ -19,11 +20,13 @@ const App = () => {
   //   createCookie();
   // },[])
   return (
-    <div>App</div>
-  )
-}
+    <div>
+      access_token:{access_token ? access_token : "no access token is set!"}
+    </div>
+  );
+};
 
-export default App
+export default App;
 
 /*
 Let me explain this `useEffect` in simple terms:
