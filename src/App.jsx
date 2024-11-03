@@ -1,17 +1,23 @@
-import React,{useEffect} from 'react';
-import { setCookie } from './utils/helpers/cookie';
+// import React,{useEffect} from 'react';
+// import {  setCookie } from './utils/helpers/cookie';
+// import { getCookie } from './utils/helpers/cookie';
 
 const App = () => {
-  useEffect(()=>{
-    const createCookie=async()=>{
-      await setCookie("credential",{
-        name:"alireza",
-        access_token:"alskjasdasd4asd",
-        refresh_token:"a6sd4as6d4a5sd"
-      })
-    }
-    createCookie();
-  },[])
+
+
+
+
+
+  // useEffect(()=>{
+  //   const createCookie=async()=>{
+  //     await setCookie("credential",{
+  //       name:"alireza",
+  //       access_token:"alskjasdasd4asd",
+  //       refresh_token:"a6sd4as6d4a5sd"
+  //     })
+  //   }
+  //   createCookie();
+  // },[])
   return (
     <div>App</div>
   )
