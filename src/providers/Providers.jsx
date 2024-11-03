@@ -1,11 +1,16 @@
 import React from "react";
 import { useEffect } from "react";
 import { getCookie } from "../utils/helpers/cookie";
+import { setCookie } from "../utils/helpers/cookie";
+import useStore from "../store";
 
 const Authorize = () => {
+  const {setState}=useStore();
   useEffect(() => {
     const readCookie = async () => {
-      const result = await getCookie("credential");
+      // setCookie("credential",{access_token:"hbjhbjniijoij8787876hbhjb",refresh_token:"khbjnkmlkjjnuh76765fhgvhgv"})
+      const result = await getCookie("credential");//we can see the credential that has the coockie saved on it in the application tab of the developer toold
+      setState(result);
       console.log(result);
     };
     readCookie();
