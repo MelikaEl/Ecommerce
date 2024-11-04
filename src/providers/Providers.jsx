@@ -4,21 +4,26 @@ import { getCookie } from "../utils/helpers/cookie";
 import { setCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
 
-const Authorize = ({children}) => {
-  const {setState}=useStore();
+const Authorize = ({ children }) => {
+  const { setState } = useStore();
   useEffect(() => {
     const readCookie = async () => {
-      // setCookie("credential",{access_token:"hbjhbjniijoij8787876hbhjb",refresh_token:"khbjnkmlkjjnuh76765fhgvhgv"})
-      const result = await getCookie("credential");//we can see the credential that has the coockie saved on it in the application tab of the developer toold
-      setState(result);
-      console.log(result);
+      //first we set cookie and comment the get cookie then comment the set cookie and uncomment the get cookie
+     await setCookie("credential", {
+        access_token: "hbjhbjniijoij8787876hbhjb",
+        refresh_token: "khbjnkmlkjjnuh76765fhgvhgv",
+      });
+
+      // const result = await getCookie("credential");//we can see the credential that has the coockie saved on it in the application tab of the developer toold
+      // setState(result);
+      // console.log(result);
     };
     readCookie();
   }, []);
-  return <>{children}</>
+  return <>{children}</>;
 };
 
-const Provider = ({children}) => {
+const Provider = ({ children }) => {
   return <Authorize>{children}</Authorize>;
 };
 
@@ -86,10 +91,6 @@ This pattern is useful because it:
 Without the `children` prop, these components would be dead ends and couldn't wrap other components, making them much less useful for application-wide features like authentication.
 */
 
-
-
-
-
 /*
 Let me explain this Provider code in simple terms:
 
@@ -135,6 +136,5 @@ Think of it like a security guard at the entrance of a building:
 - Once verified, allows access to everything inside the building (children components)
 - The building itself (Provider) is just the structure that holds everything together
 */
-
 
 export default Provider;
