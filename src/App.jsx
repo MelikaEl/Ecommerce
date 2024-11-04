@@ -2,12 +2,12 @@ import React,{useEffect} from 'react';
 // import {  setCookie } from './utils/helpers/cookie';
 // import { getCookie } from './utils/helpers/cookie';
 
-import { useStore } from "zustand";
-// import { useStore } from "./store";// in the toturial it imports from ./store 33 to 35 minutes
+// import { useStore } from "zustand";
+import useStore  from "./store";// in the toturial it imports from ./store 33 to 35 minutes
 
 const App = () => {
   
-  // const { access_token } = useStore();
+  const { access_token } = useStore();
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
@@ -21,8 +21,8 @@ const App = () => {
   // },[])
   return (
     <div>
-      access_token:
-      {/* access_token:{access_token ? access_token : "no access token is set!"} */}
+      {/* access_token: */}
+      access_token: {access_token ? access_token : "no access token is set!"}
     </div>
   );
 };
