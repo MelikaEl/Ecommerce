@@ -7,7 +7,7 @@ import useStore  from "./store";// in the toturial it imports from ./store 33 to
 
 const App = () => {
   
-  const { access_token } = useStore();
+  const { access_token, refresh_token} = useStore();
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
@@ -23,6 +23,9 @@ const App = () => {
     <div>
       {/* access_token: */}
       access_token: {access_token ? access_token : "no access token is set!"}
+      <br/>
+      refresh_token:{" "}
+      {refresh_token ? refresh_token : "no refresh token is set!"}
     </div>
   );
 };
