@@ -11,6 +11,96 @@ const useStore = create((set)=>({
         removeState:()=>set({access_token:null,refresh_token:null}),
 }));
 export default useStore;
+
+/*
+I don't understand how and why the zustand used in this app. Can you help me understand it in a simple and easy way.
+
+Let me explain how Zustand is used in this app in a simple way:
+First, we create a store (like a global box to keep our data):
+const useStore = create((set)=>({
+    access_token:null,
+    refresh_token:null,
+    setState:(data)=>
+        set({
+            access_token:data?.access_token,
+            refresh_token:data?.refresh_token,
+        }),
+        removeState:()=>set({access_token:null,refresh_token:null}),
+}));
+
+This store has:
+Two pieces of data: access_token and refresh_token (both start as null)
+Two functions:
+setState: to update both tokens
+removeState: to clear both tokens
+The Provider component reads the cookie and updates the store:
+const Authorize = ({ children }) => {
+  const { setState } = useStore();
+  useEffect(() => {
+    const readCookie = async () => {
+      //first we set cookie and comment the get cookie then comment the set cookie and uncomment the get cookie
+    
+      // await setCookie("credential", {
+      //   access_token: "hbjhbjniijoij8787876hbhjb",
+      //   refresh_token: "khbjnkmlkjjnuh76765fhgvhgv",
+      // });
+  return <Authorize>{children}</Authorize>;
+      const result = await getCookie("credential");//we can see the credential that has the coockie saved on it in the application tab of the developer toold
+      setState(result);
+      console.log(result);
+    };
+    readCookie();
+  }, []);
+  return <>{children}</>;
+When the app starts:
+Reads the encrypted cookie
+Uses setState from Zustand to save the tokens in the store
+This makes the tokens available everywhere in the app
+The App component uses the stored data:
+const App = () => {
+        name:"alireza",
+  const { access_token, refresh_token} = useStore();
+        refresh_token:"a6sd4as6d4a5sd"
+  // useEffect(()=>{
+  //   const createCookie=async()=>{
+  //     await setCookie("credential",{
+  //       name:"alireza",
+  //       access_token:"alskjasdasd4asd",
+  //       refresh_token:"a6sd4as6d4a5sd"
+  //     })
+  //   }
+  //   createCookie();
+  // },[])
+  return (
+    <div>App</div>
+    
+      access_token: {access_token ? access_token : "no access token is set!"}
+      <br/>
+      refresh_token:{" "}
+      {refresh_token ? refresh_token : "no refresh token is set!"}
+    </div>
+  );
+
+  Gets tokens from the store using useStore
+Displays them on the screen
+Shows a message if tokens aren't set
+Think of Zustand like a central bulletin board:
+The Provider reads the cookie and posts the tokens on the board
+Any component can look at the board to see the tokens
+Any component can update the board using setState
+Any component can clear the board using removeState
+The main benefits of using Zustand here are:
+Tokens are easily accessible anywhere in the app
+When tokens change, all components showing them update automatically
+Simpler than other state management solutions like Redux
+Works well with the cookie/JWT system we have
+This pattern is commonly used for managing authentication state across an application.
+*/
+
+
+
+
+
 /*
 Let me explain how this code works with Zustand in simple terms:
 
