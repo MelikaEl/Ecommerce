@@ -60,3 +60,28 @@ apiClient.interceptors.response.use(
 )
 
 export default apiClient;
+
+/*
+The purpose of this code is to handle expired authentication tokens automatically. Here's a real-world analogy:
+Imagine you're at a conference:
+You have two badges:
+Access badge (access_token) - valid for a short time
+Renewal badge (refresh_token) - valid for longer
+When you try to enter a room (make an API request):
+If your access badge is valid → you get in (request succeeds)
+If your access badge is expired (401 error):
+Show your renewal badge to get a new access badge
+Update both badges in your wallet (cookie)
+Try entering the room again with your new access badge
+This code does this automatically so that:
+Users don't get logged out when their token expires
+API requests continue working seamlessly
+Security is maintained through token rotation
+Failed requests are retried automatically
+Common use cases:
+User authentication
+API authorization
+Maintaining secure sessions
+Handling token expiration gracefully
+The beauty of this interceptor is that it works automatically for all API requests made through apiClient, providing a seamless experience for users even when their tokens expire.
+*/
