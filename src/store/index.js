@@ -5,7 +5,7 @@ const useStore = create((set)=>({
     refresh_token:null,
     setState:(data)=>
         set({
-            access_token:data?.access_token,
+            access_token:data?.access_token,//The ?. is called the "optional chaining operator" in JavaScript. Let me explain why it's used here:1. Purpose: It's a safe way to access nested object properties without causing an error if the parent object is null or undefined. In this context: When setState is called, if data is null or undefined, instead of throwing an error, it will gracefully return undefined. This makes the code more robust by handling cases where data might not exist, which could happen if there's an error reading the cookie or during initialization.
             refresh_token:data?.refresh_token,
         }),
         removeState:()=>set({access_token:null,refresh_token:null}),
