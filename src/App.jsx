@@ -4,10 +4,19 @@ import React,{useEffect} from 'react';
 
 // import { useStore } from "zustand";
 import useStore  from "./store";// in the toturial it imports from ./store 33 to 35 minutes
+import getProductsApi from './utils/apis/products/getProductsApi';
 
 const App = () => {
   
   const { access_token, refresh_token} = useStore();
+
+  useEffect(()=>{
+    const fetchData=async()=>{
+      const result = await getProductsApi();
+      console.log(result)
+    };
+    fetchData();
+  },[]);
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
