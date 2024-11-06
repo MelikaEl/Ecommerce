@@ -9,19 +9,19 @@ import getProductsApi from "./utils/apis/products/getProductsApi";
 const App = () => {
   const { access_token, refresh_token } = useStore();
 
-  useEffect(() => {
-    const fetchData = async () => {
+  // useEffect(() => {
+  //   const fetchData = async () => {
       
-        // await setCookie("credential", {
+         // await setCookie("credential", {
         //   access_token: "jfnvjdnvjnjnfjnv",
-        //   refresh_token: "hjnvjn877ndsd",
-        // });
+         //   refresh_token: "hjnvjn877ndsd",
+         // });
       
-      const result = await getProductsApi();
-      console.log(result);
-    };
-    fetchData();
-  }, []);
+  //     const result = await getProductsApi();
+  //     console.log(result);
+  //   };
+  //   fetchData();
+  // }, []);
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
