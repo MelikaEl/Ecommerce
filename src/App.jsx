@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { setCookie } from "./utils/helpers/cookie";
+// import { setCookie } from "./utils/helpers/cookie";
 // import { getCookie } from './utils/helpers/cookie';
 
 // import { useStore } from "zustand";
