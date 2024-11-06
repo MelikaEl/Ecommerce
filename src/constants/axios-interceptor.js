@@ -33,7 +33,8 @@ apiClient.interceptors.response.use(
   async (error) => {
     // console.log("e1");
     const originalRequest = error.config;
-    if (error.response.status === 404 && !originalRequest._retry) {
+    // if (error.response.status === 404 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       // console.log("e2");
 
