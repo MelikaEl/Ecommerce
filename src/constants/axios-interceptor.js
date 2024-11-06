@@ -31,11 +31,11 @@ apiClient.interceptors.response.use(
   //here we use interceptors for handling the refresh token because the interceptors are use for making changes in the API requests. Here we apply a rule for when the access tokens are expired, we get the refresh tokens.
   (response) => response,
   async (error) => {
-    console.log("e1");
+    // console.log("e1");
     const originalRequest = error.config;
     if (error.response.status === 404 && !originalRequest._retry) {
       originalRequest._retry = true;
-      console.log("e2");
+      // console.log("e2");
 
       originalRequest._retry = true;
 
@@ -66,7 +66,8 @@ Note: I notice that in your code, `originalRequest._retry=true` appears twice in
    - If the retried request fails: `_retry` is `true` → reject immediately
    - This prevents endless retry loops
             */
-      console.log("e3");
+
+      // console.log("e3");
 
       try {
         const refreshToken = await getRefreshToken();
