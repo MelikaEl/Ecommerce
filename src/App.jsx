@@ -1,22 +1,27 @@
-import React,{useEffect} from 'react';
-// import {  setCookie } from './utils/helpers/cookie';
+import React, { useEffect } from "react";
+import { setCookie } from "./utils/helpers/cookie";
 // import { getCookie } from './utils/helpers/cookie';
 
 // import { useStore } from "zustand";
-import useStore  from "./store";// in the toturial it imports from ./store 33 to 35 minutes
-import getProductsApi from './utils/apis/products/getProductsApi';
+import useStore from "./store"; // in the toturial it imports from ./store 33 to 35 minutes
+import getProductsApi from "./utils/apis/products/getProductsApi";
 
 const App = () => {
-  
-  const { access_token, refresh_token} = useStore();
+  const { access_token, refresh_token } = useStore();
 
-  useEffect(()=>{
-    const fetchData=async()=>{
+  useEffect(() => {
+    const fetchData = async () => {
+      
+        await setCookie("credential", {
+          access_token: "jfnvjdnvjnjnfjnv",
+          refresh_token: "hjnvjn877ndsd",
+        });
+      
       const result = await getProductsApi();
-      console.log(result)
+      console.log(result);
     };
     fetchData();
-  },[]);
+  }, []);
 
   // useEffect(()=>{
   //   const createCookie=async()=>{
@@ -32,7 +37,7 @@ const App = () => {
     <div>
       {/* access_token: */}
       access_token: {access_token ? access_token : "no access token is set!"}
-      <br/>
+      <br />
       refresh_token:{" "}
       {refresh_token ? refresh_token : "no refresh token is set!"}
     </div>
