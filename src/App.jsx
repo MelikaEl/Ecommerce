@@ -12,10 +12,10 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       
-        await setCookie("credential", {
-          access_token: "jfnvjdnvjnjnfjnv",
-          refresh_token: "hjnvjn877ndsd",
-        });
+        // await setCookie("credential", {
+        //   access_token: "jfnvjdnvjnjnfjnv",
+        //   refresh_token: "hjnvjn877ndsd",
+        // });
       
       const result = await getProductsApi();
       console.log(result);
