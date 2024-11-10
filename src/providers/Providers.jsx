@@ -3,19 +3,20 @@ import { useEffect } from "react";
 import { getCookie } from "../utils/helpers/cookie";
 import { setCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
+import { RouterProvider } from "react-router-dom";
 
 const Authorize = ({ children }) => {
   const { setState } = useStore();
   useEffect(() => {
     const readCookie = async () => {
       //first we set cookie and comment the get cookie then comment the set cookie and uncomment the get cookie
-    
+
       // await setCookie("credential", {
       //   access_token: "hbjhbjniijoij8787876hbhjb",
       //   refresh_token: "khbjnkmlkjjnuh76765fhgvhgv",
       // });
 
-      const result = await getCookie("credential");//we can see the credential that has the coockie saved on it in the application tab of the developer toold
+      const result = await getCookie("credential"); //we can see the credential that has the coockie saved on it in the application tab of the developer toold
       setState(result);
       console.log(result);
     };
@@ -25,7 +26,11 @@ const Authorize = ({ children }) => {
 };
 
 const Provider = ({ children }) => {
-  return <Authorize>{children}</Authorize>;
+  return (
+    <RouterProvider>
+      <Authorize>{children}</Authorize>;
+    </RouterProvider>
+  );
 };
 
 /*
