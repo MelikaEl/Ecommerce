@@ -4,6 +4,7 @@ import { getCookie } from "../utils/helpers/cookie";
 import { setCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
 import { RouterProvider } from "react-router-dom";
+import router from "../constants/router"
 
 const Authorize = ({ children }) => {
   const { setState } = useStore();
@@ -27,7 +28,7 @@ const Authorize = ({ children }) => {
 
 const Provider = ({ children }) => {
   return (
-    <RouterProvider>
+    <RouterProvider router={router}>
       <Authorize>{children}</Authorize>;
     </RouterProvider>
   );
