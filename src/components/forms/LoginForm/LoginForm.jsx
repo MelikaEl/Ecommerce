@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import loginApi from "../../../utils/apis/auth/loginApi";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const loginSchema = z.object({
   email: z.string().min(1, "it can't be empty!").email("enter a valid email"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
@@ -18,13 +18,16 @@ const LoginForm = () => {
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   const handleLogin = async (data) => {
-    toast.error("djhbsdbsdvjhbjjnvnnjsddnvj")
-    try {
-      const result = await loginApi(data);
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
+    // toast.error("djhbsdbsdvjhbjjnvnnjsddnvj")
+
+    const result = await loginApi(data);
+    if (result?.status == 200 || result?.status == 201) {
+      const access_token = result?.data?.access_token;
+      const refresh_token = result?.data?.refresh_token;
+      // console.log(access_token, refresh_token);
+
+      // console.log(result);
+    } else toast.error("invalid username password!");
   };
 
   return (
@@ -33,8 +36,10 @@ const LoginForm = () => {
       onSubmit={handleSubmit(async (data) => await handleLogin(data))}
       className="border-2 rounded-xl shadow-md p-4  lg:w-[30%] w-[80%]"
     >
-      <fieldset disabled={isSubmitting} /*disabled={false} All inputs are enabled */ className="flex flex-col gap-4"  >   
-        
+      <fieldset
+        disabled={isSubmitting}
+        /*disabled={false} All inputs are enabled */ className="flex flex-col gap-4"
+      >
         <input
           {...register(
             "email"
@@ -108,7 +113,7 @@ This makes more sense from a UX perspective as red typically indicates errors.*/
           className="w-[100%] bg-slate-600 text-slate-50 rounded-md py-2 px-4"
           type="submit"
         >
-          {isSubmitting?"Logginig...":"Login"}
+          {isSubmitting ? "Logginig..." : "Login"}
         </button>
       </fieldset>
     </form>
