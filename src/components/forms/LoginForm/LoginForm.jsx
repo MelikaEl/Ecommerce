@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import loginApi from "../../../utils/apis/auth/loginApi";
+import { toast } from 'react-toastify';
 
 const loginSchema = z.object({
-  email: z.string().email().min(1, "it can't be empty!"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
+  email: z.string().min(1, "it can't be empty!").email("enter a valid email"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
   password: z.string().min(1, "it can't be empty!"),
 });
 
@@ -17,6 +18,7 @@ const LoginForm = () => {
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   const handleLogin = async (data) => {
+    toast.error("djhbsdbsdvjhbjjnvnnjsddnvj")
     try {
       const result = await loginApi(data);
       console.log(result);

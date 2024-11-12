@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import { getCookie } from "../utils/helpers/cookie";
 import { setCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
-import { RouterProvider } from "react-router-dom";
-import router from "../constants/router"
+import { ToastContainer } from "react-toastify";
 
 const Authorize = ({ children }) => {
   const { setState } = useStore();
@@ -28,9 +27,10 @@ const Authorize = ({ children }) => {
 
 const Provider = ({ children }) => {
   return (
-    <RouterProvider router={router}>
-      <Authorize>{children}</Authorize>;
-    </RouterProvider>
+    <Authorize>
+      {children}
+      <ToastContainer />
+    </Authorize>
   );
 };
 
