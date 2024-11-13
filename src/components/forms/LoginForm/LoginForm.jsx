@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import loginApi from "../../../utils/apis/auth/loginApi";
 import { toast } from "react-toastify";
+import useStore from "../../../store";
+import { setCookie } from "../../../utils/helpers/cookie";
+import {useNavigate} from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string().min(1, "it can't be empty!").email("enter a valid email"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
@@ -11,6 +14,9 @@ const loginSchema = z.object({
 });
 
 const LoginForm = () => {
+  const { setState } = useStore();
+  const navigate= useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -25,9 +31,86 @@ const LoginForm = () => {
       const access_token = result?.data?.access_token;
       const refresh_token = result?.data?.refresh_token;
       // console.log(access_token, refresh_token);
-
+      await setCookie("credential", {//"credential" in this code is simply a key name for storing authentication tokens in the browser's cookies. Instead of credential we can set any desired name and this name is used for storing the tokens in the cookie of the browser.
+        access_token: access_token,
+        refresh_token: refresh_token,
+      });
       // console.log(result);
+      setState({ access_token: access_token, refresh_token: refresh_token });
+      toast.success("logged in successfully , redirecting to dashboard...")
+      setTimeout(()=>navigate("/dashboard"),1000)//navigate to dashboard after 1 second
+      
     } else toast.error("invalid username password!");
+    /*
+    Let me explain this code block in detail:
+
+1. **Check API Response Status**:
+```javascript
+if (result?.status == 200 || result?.status == 201)
+```
+- Checks if login was successful (HTTP status 200 or 201)
+- Uses optional chaining (`?.`) to safely access status
+
+2. **Extract Tokens**:
+```javascript
+const access_token = result?.data?.access_token;
+const refresh_token = result?.data?.refresh_token;
+```
+- Gets authentication tokens from API response
+- `access_token`: Used for API requests
+- `refresh_token`: Used to get new access token when it expires
+
+3. **Save to Cookie**:
+```javascript
+await setCookie("credential", {
+    access_token: access_token,
+    refresh_token: refresh_token,
+})
+```
+- Stores tokens in browser cookies securely
+- Uses the `setCookie` function defined in:
+
+```4:5:src/utils/helpers/cookie.js
+export const setCookie = async (key,data)=>
+    Cookies.set(key, await encryptJWT(data));
+```
+
+
+4. **Update Global State**:
+```javascript
+setState({access_token:access_token,refresh_token:refresh_token})
+```
+- Updates application's global state with tokens
+- Makes tokens available throughout the app
+- Uses Zustand store for state management
+
+5. **Error Handling**:
+```javascript
+else toast.error("invalid username password!");
+```
+- Shows error message if login fails
+- Uses react-toastify for displaying error notifications
+
+This code is crucial for:
+- Handling successful login
+- Storing authentication credentials
+- Managing user sessions
+- Providing feedback to users
+- Setting up authenticated API requests
+
+The tokens are used by the axios interceptor defined in:
+
+```22:28:src/constants/axios-interceptor.js
+export const apiClient = axios.create({
+  baseURL: "https://api.escuelajs.co/api/v1",
+  headers: {
+    // the headers of the API requests append additional data and here the additional data is the token
+    Authorization: `Bearer ${await getAccessToken()}`,
+  },
+});
+```
+
+    */
   };
 
   return (
