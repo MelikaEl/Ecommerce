@@ -18,6 +18,7 @@ import useStore from "../../../store";
 import { setCookie } from "../../../utils/helpers/cookie";
 import { useNavigate } from "react-router-dom";
 import createUserApi from "../../../utils/apis/users/createUserApi";
+import { Link } from "react-router-dom";
 
 const loginSchema = z
   .object({
@@ -27,7 +28,10 @@ const loginSchema = z
     avatar: z.string(),
     gender: z.string(),
   })
-  .refine((data) => data.avatar=`https://avatar.iran.liara.run/public/${data.gender}`);
+  .refine(
+    (data) =>
+      (data.avatar = `https://avatar.iran.liara.run/public/${data.gender}`)
+  );
 /*
 `refine` in Zod schema is used for custom validation logic. Let me explain its functionality:
 
@@ -107,11 +111,11 @@ const LoginForm = () => {
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   const handleSignup = async (data) => {
-     const result = await createUserApi(data);
-     if (result?.status == 200 || result?.status == 201){
+    const result = await createUserApi(data);
+    if (result?.status == 200 || result?.status == 201) {
       toast.success("register successfully , redirecting to login ...");
-      setTimeout(()=> navigate("/login"),1000);
-     }else toast.error("something goes wrong, try again later");
+      setTimeout(() => navigate("/login"), 1000);
+    } else toast.error("something goes wrong, try again later");
   };
 
   return (
@@ -256,8 +260,11 @@ This is different from a regular input field which would be visible and editable
           className="w-[100%] bg-slate-600 text-slate-50 rounded-md py-2 px-4"
           type="submit"
         >
-          {isSubmitting ? "Logginig..." : "Login"}
+          {isSubmitting ? "Registering..." : "Register"}
         </button>
+        <Link className="text-center underline text-xs" to="/login">
+          have a account? log in
+        </Link>
       </fieldset>
     </form>
   );
