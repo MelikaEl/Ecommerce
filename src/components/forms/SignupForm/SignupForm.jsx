@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import useStore from "../../../store";
 import { setCookie } from "../../../utils/helpers/cookie";
 import { useNavigate } from "react-router-dom";
+import createUserApi from "../../../utils/apis/users/createUserApi";
 
 const loginSchema = z
   .object({
@@ -95,7 +96,7 @@ const userSchema = z.object({
 - Adding conditional validation
 */
 
-const SignupForm = () => {
+const LoginForm = () => {
   // const { setState } = useStore();
   const navigate = useNavigate();
 
@@ -106,7 +107,11 @@ const SignupForm = () => {
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   const handleSignup = async (data) => {
-    console.log(data);
+     const result = await createUserApi(data);
+     if (result?.status == 200 || result?.status == 201){
+      toast.success("register successfully , redirecting to login ...");
+      setTimeout(()=> navigate("/login"),1000);
+     }else toast.error("something goes wrong, try again later");
   };
 
   return (
@@ -258,4 +263,4 @@ This is different from a regular input field which would be visible and editable
   );
 };
 
-export default SignupForm;
+export default LoginForm;
