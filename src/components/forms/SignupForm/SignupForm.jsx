@@ -8,7 +8,7 @@
 
 // export default SignupForm
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -103,12 +103,19 @@ const userSchema = z.object({
 const LoginForm = () => {
   // const { setState } = useStore();
   const navigate = useNavigate();
-
+  const {access_token} = useStore();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(loginSchema) });
+
+  useEffect(()=>{
+    if (!access_token) {
+      toast.warn("you are already signed in!"),
+      navigate("/dashboard");
+    }
+  },[])
 
   const handleSignup = async (data) => {
     const result = await createUserApi(data);

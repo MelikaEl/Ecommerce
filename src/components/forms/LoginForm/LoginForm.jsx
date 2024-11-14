@@ -6,7 +6,8 @@ import loginApi from "../../../utils/apis/auth/loginApi";
 import { toast } from "react-toastify";
 import useStore from "../../../store";
 import { setCookie } from "../../../utils/helpers/cookie";
-import {useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const loginSchema = z.object({
   email: z.string().min(1, "it can't be empty!").email("enter a valid email"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
@@ -14,14 +15,27 @@ const loginSchema = z.object({
 });
 
 const LoginForm = () => {
-  const { setState } = useStore();
-  const navigate= useNavigate();
+  const { setState, access_token } = useStore();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(loginSchema) });
+
+  useEffect(()=>{
+    if (!access_token) {
+      toast.warn("you are already logged in!"),
+      navigate("/dashboard");
+    }
+  },[])
+  /*
+the user that is logged in, can't logged in or sign up again and it inderstands that by knowing that the access token
+is already exists in the cookie or not. If you are in the Login page and refresh the page, if you already logged in 
+the login page doesn't appear again or if you already signed up and refresh the page, the sign up page doesn't appear
+again.
+*/
 
   const handleLogin = async (data) => {
     // toast.error("djhbsdbsdvjhbjjnvnnjsddnvj")
@@ -31,15 +45,15 @@ const LoginForm = () => {
       const access_token = result?.data?.access_token;
       const refresh_token = result?.data?.refresh_token;
       // console.log(access_token, refresh_token);
-      await setCookie("credential", {//"credential" in this code is simply a key name for storing authentication tokens in the browser's cookies. Instead of credential we can set any desired name and this name is used for storing the tokens in the cookie of the browser.
+      await setCookie("credential", {
+        //"credential" in this code is simply a key name for storing authentication tokens in the browser's cookies. Instead of credential we can set any desired name and this name is used for storing the tokens in the cookie of the browser.
         access_token: access_token,
         refresh_token: refresh_token,
       });
       // console.log(result);
       setState({ access_token: access_token, refresh_token: refresh_token });
-      toast.success("logged in successfully , redirecting to dashboard...")
-      setTimeout(()=>navigate("/dashboard"),1000)//navigate to dashboard after 1 second
-      
+      toast.success("logged in successfully , redirecting to dashboard...");
+      setTimeout(() => navigate("/dashboard"), 1000); //navigate to dashboard after 1 second
     } else toast.error("invalid username password!");
     /*
     Let me explain this code block in detail:
@@ -198,6 +212,9 @@ This makes more sense from a UX perspective as red typically indicates errors.*/
         >
           {isSubmitting ? "Logginig..." : "Login"}
         </button>
+        <Link className="text-center underline text-xs" to="/signup">
+          dont have an account? signup{" "}
+        </Link>
       </fieldset>
     </form>
   );
