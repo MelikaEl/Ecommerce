@@ -110,12 +110,13 @@ const LoginForm = () => {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
-  useEffect(()=>{
-    if (!access_token) {
-      toast.warn("you are already signed in!"),
+  useEffect(() => {
+    // console.log(access_token);
+    if (access_token != null && access_token != undefined) {
+      toast.warn("you are already logged in!");
       navigate("/dashboard");
     }
-  },[])
+  }, []);
 
   const handleSignup = async (data) => {
     const result = await createUserApi(data);

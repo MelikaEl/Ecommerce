@@ -24,12 +24,13 @@ const LoginForm = () => {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
-  useEffect(()=>{
-    if (!access_token) {
-      toast.warn("you are already logged in!"),
+  useEffect(() => {
+    // console.log(access_token);
+    if (access_token != null && access_token != undefined) {
+      toast.warn("you are already logged in!");
       navigate("/dashboard");
     }
-  },[])
+  }, []);
   /*
 the user that is logged in, can't logged in or sign up again and it inderstands that by knowing that the access token
 is already exists in the cookie or not. If you are in the Login page and refresh the page, if you already logged in 
