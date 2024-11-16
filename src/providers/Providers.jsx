@@ -4,7 +4,11 @@ import { getCookie } from "../utils/helpers/cookie";
 import { setCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
 import { ToastContainer } from "react-toastify";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+
+//Create a client
+const queryClient= new QueryClient();
 const Authorize = ({ children }) => {
   const { setState } = useStore();
   useEffect(() => {
@@ -27,10 +31,12 @@ const Authorize = ({ children }) => {
 
 const Provider = ({ children }) => {
   return (
+    <QueryClientProvider client={queryClient}>
     <Authorize>
       {children}
       <ToastContainer />
     </Authorize>
+    </QueryClientProvider>
   );
 };
 
@@ -142,6 +148,102 @@ Think of it like a security guard at the entrance of a building:
 - The guard (Authorize) checks your credentials (cookie)
 - Once verified, allows access to everything inside the building (children components)
 - The building itself (Provider) is just the structure that holds everything together
+*/
+
+
+
+/*
+
+
+React Query is used in two main places in your codebase:
+
+1. **Provider Setup**:
+
+```7:41:src/providers/Providers.jsx
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const Authorize = ({ children }) => {
+//Create a client
+const queryClient= new QueryClient();
+const Authorize = ({ children }) => {
+  const { setState } = useStore();
+  useEffect(() => {
+    const readCookie = async () => {
+      //first we set cookie and comment the get cookie then comment the set cookie and uncomment the get cookie
+      //   refresh_token: "khbjnkmlkjjnuh76765fhgvhgv",
+      // await setCookie("credential", {
+      //   access_token: "hbjhbjniijoij8787876hbhjb",
+      //   refresh_token: "khbjnkmlkjjnuh76765fhgvhgv",
+      // });
+      console.log(result);
+      const result = await getCookie("credential"); //we can see the credential that has the coockie saved on it in the application tab of the developer toold
+      setState(result);
+      console.log(result);
+    };
+    readCookie();
+  }, []);
+  return <>{children}</>;
+};
+    <Authorize>
+const Provider = ({ children }) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+    <Authorize>
+      {children}
+      <ToastContainer />
+    </Authorize>
+    </QueryClientProvider>
+  );
+};
+```
+
+
+Here, React Query is set up with:
+- Creating a new QueryClient
+- Wrapping the app with QueryClientProvider
+- This enables React Query features throughout the application
+
+2. **Data Fetching in Dashboard**:
+
+```13:16:src/pages/Dashboard/Dashboard.jsx
+  const { isPending, error, data } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => getUserInfoWithTokenApi(),
+  });
+```
+
+
+The `useQuery` hook is used here to:
+- Fetch user info with a unique query key `["userInfo"]`
+- Call `getUserInfoWithTokenApi()`
+- Automatically manages:
+  - Loading states (`isPending`)
+  - Error handling (`error`)
+  - Data caching (`data`)
+  - Request retries
+  - Background refetches
+
+Benefits of using React Query in this code:
+1. Automatic caching of user info
+2. Built-in loading and error states
+3. No need for manual state management
+4. Automatic background data updates
+5. Server state synchronization
+
+You could enhance the React Query usage by:
+```javascript
+const { isPending, error, data } = useQuery({
+  queryKey: ["userInfo"],
+  queryFn: () => getUserInfoWithTokenApi(),
+  staleTime: 5 * 60 * 1000, // Data stays fresh for 5 minutes
+  retry: 3,                 // Retry failed requests 3 times
+  onError: (error) => {
+    toast.error("Failed to fetch user info");
+  }
+});
+```
+
+This would add more robust error handling and caching behavior to your application.
 */
 
 export default Provider;
