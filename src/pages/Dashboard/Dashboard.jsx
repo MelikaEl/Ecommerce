@@ -38,31 +38,27 @@ const Dashboard = () => {
           {isPending && <p>loading data...</p>}
           {error && <p>error occured!</p>}
           {data && (
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="profile image" src={data?.data?.avatar} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Brunch this weekend?"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        sx={{ color: "text.primary", display: "inline" }}
-                      >
-                        Ali Connors
-                      </Typography>
-                      {" — I'll be in your neighborhood doing errands this…"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-            </List>
+            <ListItem alignItems="flex-start">
+              <div className="w-[10rem] pe-4">
+                <img alt="profile image" src={data?.data?.avatar} />
+              </div>
+
+              <ListItemText
+                primary="Brunch this weekend?"
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{ color: "text.primary", display: "inline" }}
+                    >
+                      Ali Connors
+                    </Typography>
+                    {" — I'll be in your neighborhood doing errands this…"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
           )}
         </>
       ) : (
