@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 const DashboardSkeleton = () => {
   return (
     <ListItem alignItems="flex-start">
-        <div className="w-[10rem] pe-4 rounded-full animate-pulse bg-slate-400 h-[10rem]">
+        <div className="lg:w-[10rem] w-[5rem] me-6 pe-4 rounded-full animate-pulse bg-slate-400 h-[5rem] lg:h-[10rem]">
         </div>
 
         <ListItemText
