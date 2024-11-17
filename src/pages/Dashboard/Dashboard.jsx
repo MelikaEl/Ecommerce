@@ -15,6 +15,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import DashboardSkeleton from "../../components/skeleton/DashboardSkeleton";
 
 const Dashboard = () => {
   const { access_token } = useStore();
@@ -35,27 +36,55 @@ const Dashboard = () => {
     <div>
       {access_token != null && access_token != undefined ? (
         <>
-          {isPending && <p>loading data...</p>}
+          {isPending && <DashboardSkeleton />}
           {error && <p>error occured!</p>}
           {data && (
             <ListItem alignItems="flex-start">
-              <div className="w-[10rem] pe-4">
-                <img alt="profile image" src={data?.data?.avatar} />
+              <div className="w-[10rem] pe-4 ">
+                <img
+                  alt="profile image"
+                  src={data?.data?.avatar}
+                  className="rounded-full"
+                />
               </div>
 
               <ListItemText
-                primary="Brunch this weekend?"
+                primary={
+                  <p className="font-bold">{`welcome, ${data?.data?.email} !`}</p>
+                }
                 secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{ color: "text.primary", display: "inline" }}
-                    >
-                      Ali Connors
-                    </Typography>
-                    {" — I'll be in your neighborhood doing errands this…"}
-                  </React.Fragment>
+                  <div className="flex flex-col gap-4 mt-4">
+                    <div>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: "text.primary", display: "inline" }}
+                      >
+                        name &nbsp; : &nbsp;
+                      </Typography>
+                      {data?.data?.name}
+                    </div>{" "}
+                    <div>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: "text.primary", display: "inline" }}
+                      >
+                        role &nbsp; : &nbsp;
+                      </Typography>
+                      {data?.data?.role}
+                    </div>{" "}
+                    <div>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        sx={{ color: "text.primary", display: "inline" }}
+                      >
+                        password &nbsp; : &nbsp;
+                      </Typography>
+                      {data?.data?.password}
+                    </div>{" "}
+                  </div>
                 }
               />
             </ListItem>
