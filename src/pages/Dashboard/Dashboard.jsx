@@ -16,6 +16,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import DashboardSkeleton from "../../components/skeleton/DashboardSkeleton";
+import ErrorOnFetchApi from "../../components/common/ErrorOnFetchApi";
 
 const Dashboard = () => {
   const { access_token } = useStore();
@@ -37,7 +38,7 @@ const Dashboard = () => {
       {access_token != null && access_token != undefined ? (
         <>
           {isPending && <DashboardSkeleton />}
-          {error && <p>error occured!</p>}
+          {error && <ErrorOnFetchApi/>}
           {data && (
             <ListItem alignItems="flex-start">
               <div className="w-[10rem] pe-4 ">
