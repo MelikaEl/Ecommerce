@@ -17,9 +17,10 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import DashboardSkeleton from "../../components/skeleton/DashboardSkeleton";
 import ErrorOnFetchApi from "../../components/common/ErrorOnFetchApi";
+import { removeCookie } from "../../utils/helpers/cookie";
 
 const Dashboard = () => {
-  const { access_token } = useStore();
+  const { access_token, removeState } = useStore();
   const navigate = useNavigate();
   const { isPending, error, data } = useQuery({
     queryKey: ["userInfo"],
@@ -33,6 +34,15 @@ const Dashboard = () => {
   //   }
   // },[]);
   console.log(data);
+
+ const handleLogout = () => {
+  removeCookie("credential");
+  removeState();
+  toast.warn("logged out successfully, redirecting to login page...");
+  setTimeout(()=>navigate("/login"),1000);//navigate to the login page after 1 second
+ };
+
+
   return (
     <div>
       {access_token != null && access_token != undefined ? (
@@ -40,6 +50,7 @@ const Dashboard = () => {
           {isPending && <DashboardSkeleton />}
           {error && <ErrorOnFetchApi/>}
           {data && (
+            <>
             <ListItem alignItems="flex-start">
               <div className="w-[10rem] pe-4 ">
                 <img
@@ -88,7 +99,10 @@ const Dashboard = () => {
                   </div>
                 }
               />
+             
             </ListItem>
+             <button onClick={handleLogout} className="bg-red-500 text-slate-50 rounded-md px-4 py-2 ms-4">Logout</button>
+             </>
           )}
         </>
       ) : (
