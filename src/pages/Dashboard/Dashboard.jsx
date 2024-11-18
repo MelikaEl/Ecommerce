@@ -46,7 +46,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       {access_token != null && access_token != undefined ? (
         <>
           {isPending && <DashboardSkeleton />}
@@ -113,8 +113,14 @@ const Dashboard = () => {
           )}
         </>
       ) : (
-        <Link className="underline" to="/login">
-          only logged in users can access
+        <Link
+          className="underline flex items-center justify-center"
+          to="/login"
+        >
+          <p className="bg-slate-500 px-4 py-2 capitalize text-slate-50 rounded-md my-16 text-xl">
+            {" "}
+            only logged in users can access to dashboard
+          </p>
         </Link>
       )}
     </div>
