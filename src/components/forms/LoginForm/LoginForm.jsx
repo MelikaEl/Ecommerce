@@ -13,7 +13,7 @@ const loginSchema = z.object({
   email: z.string().min(1, "it can't be empty!").email("enter a valid email"), //the sequence of writing the z.objects are important. If we write z.email().string() it gives us error
   password: z.string().min(1, "it can't be empty!"),
 });
-
+//In the login page. if we put the email and password of the platzi fake store API and it gives error, I should turn off the web access protection of the ESET security.
 const LoginForm = () => {
   const { setState, access_token } = useStore();
   const navigate = useNavigate();
