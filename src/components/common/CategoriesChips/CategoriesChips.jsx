@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import getCategoriesApi from "../../../utils/apis/categories/getCategoriesApi";
 import { Category } from "@mui/icons-material";
 import CategoriesChipsSkeleton from "../../skeleton/CategoriesChipsSkeleton";
+import ErrorOnFetchApi from "../ErrorOnFetchApi/ErrorOnFetchApi"
 
 const CategoriesChips = () => {
   const { isPending, error, data } = useQuery({
@@ -16,6 +17,7 @@ const CategoriesChips = () => {
   return (
     <div className="mx-4 flex flex-wrap gap-4">
       {isPending && <CategoriesChipsSkeleton/>}
+      {error && <ErrorOnFetchApi/>}
       {data &&
         data?.data.map(
           (
