@@ -3,6 +3,7 @@ import Root from "../pages/Root";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup"
 import Dashboard from "../pages/Dashboard";
+import Categories from "../pages/Categories";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     {
       path: "/dashboard",
       element: <Dashboard/>,
+    },
+    {
+      path: "/categories/:id",
+      element: <Categories/>,
     },
   ]);
 
