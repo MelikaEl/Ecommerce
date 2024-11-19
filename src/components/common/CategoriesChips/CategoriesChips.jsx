@@ -20,9 +20,14 @@ const CategoriesChips = () => {
             category //instead of name category, we can put any name instead of that
           ) => (
             <Chip
+              sx={{ height: "5rem" }} //by the sx prop of MUI we can apply style
               key={category?.id}
               avatar={
-                <Avatar alt={`${category?.name}`} src={category?.image} />
+                <Avatar
+                  sx={{ width: "4rem !important", height: "4rem !important" }}//CSS Specificity: The !important declaration in CSS increases the specificity of a style rule, making it take precedence over other styles that may be applied to the same element. In this case, it ensures that the specified width and height of "4rem" are applied regardless of any other styles that might conflict with these dimensions.
+                  alt={`${category?.name}`}
+                  src={category?.image}
+                />
               }
               label={category?.name}
               variant="outlined"
