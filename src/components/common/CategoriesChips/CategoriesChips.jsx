@@ -5,7 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import getCategoriesApi from "../../../utils/apis/categories/getCategoriesApi";
 import { Category } from "@mui/icons-material";
 import CategoriesChipsSkeleton from "../../skeleton/CategoriesChipsSkeleton";
-import ErrorOnFetchApi from "../ErrorOnFetchApi/ErrorOnFetchApi"
+import ErrorOnFetchApi from "../ErrorOnFetchApi/ErrorOnFetchApi";
+import { Link } from "react-router-dom";
 
 const CategoriesChips = () => {
   const { isPending, error, data } = useQuery({
@@ -16,26 +17,27 @@ const CategoriesChips = () => {
   console.log(data);
   return (
     <div className="mx-4 flex flex-wrap gap-4">
-      {isPending && <CategoriesChipsSkeleton/>}
-      {error && <ErrorOnFetchApi/>}
+      {isPending && <CategoriesChipsSkeleton />}
+      {error && <ErrorOnFetchApi />}
       {data &&
         data?.data.map(
           (
             category //instead of name category, we can put any name instead of that
           ) => (
-            <Chip
-              sx={{ height: "5rem" }} //by the sx prop of MUI we can apply style
-              key={category?.id}
-              avatar={
-                <Avatar
-                  sx={{ width: "4rem !important", height: "4rem !important" }}//CSS Specificity: The !important declaration in CSS increases the specificity of a style rule, making it take precedence over other styles that may be applied to the same element. In this case, it ensures that the specified width and height of "4rem" are applied regardless of any other styles that might conflict with these dimensions.
-                  alt={`${category?.name}`}
-                  src={category?.image}
-                />
-              }
-              label={category?.name}
-              variant="outlined"
-            />
+            <Link to={`/categories/${category?.id}`} key={category?.id}>
+              <Chip
+                sx={{ height: "5rem" }} //by the sx prop of MUI we can apply style
+                avatar={
+                  <Avatar
+                    sx={{ width: "4rem !important", height: "4rem !important" }} //CSS Specificity: The !important declaration in CSS increases the specificity of a style rule, making it take precedence over other styles that may be applied to the same element. In this case, it ensures that the specified width and height of "4rem" are applied regardless of any other styles that might conflict with these dimensions.
+                    alt={`${category?.name}`}
+                    src={category?.image}
+                  />
+                }
+                label={category?.name}
+                variant="outlined"
+              />
+            </Link>
           )
         )}
     </div>
