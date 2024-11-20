@@ -13,12 +13,17 @@ const ProductsByCategoryGrid = ({ id }) => {
 
   return (
     <div className="flex flex-wrap gap-4 px-8 items-center justify-center my-8">
-      {isPending && Array.from("123456").map((i)=><ProductGridSkeleton key={i}/>)/* It shows 6 times the products skeleton */}
+      {
+        isPending &&
+          Array.from("123456").map((i) => (
+            <ProductGridSkeleton key={i} />
+          )) /* It shows 6 times the products skeleton */
+      }
       {data &&
         data?.data?.map((product) => (
           <div
             key={product?.id}
-            className="rounded-xl flex flex-col shadow-lg gap-4 items-center justify-center pb-4 w-3/12"
+            className="rounded-xl flex flex-col shadow-lg gap-4 items-center justify-center pb-4 w-5/12 lg:w-3/12 "
           >
             <img
               src={product?.images[0].replace(/^["[]+|["\]]/g, "")}
