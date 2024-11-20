@@ -11,7 +11,7 @@ const ProductsByCategoryGrid = ({ id }) => {
   console.log(data);
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap gap-4 px-8 items-center justify-center my-8">
       {data &&
         data?.data?.map((product) => (
           <div
@@ -20,7 +20,7 @@ const ProductsByCategoryGrid = ({ id }) => {
           >
             <img
               src={product?.images[0].replace(/^["[]+|["\]]/g, "")}
-              className="rounded-t-xl h-[8rem]"
+              className="w-[100%] rounded-t-xl h-[15rem]"
               /*
             .replace(/^["[]+|["\]]/g, ""):
 This is a regular expression used to remove unwanted characters from the image URL.
@@ -48,6 +48,8 @@ The removal of certain characters from the image URL using the `replace` method 
 In summary, cleaning the URL ensures that it is in a proper format for use in the `src` attribute, which is crucial for the correct display of images in a web application.
             */
             />
+            <p>{product?.title}</p>
+            <p>{product?.price}$</p>
           </div>
         ))}
     </div>
