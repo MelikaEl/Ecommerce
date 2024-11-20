@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const CategoriesChips = () => {
   const { isPending, error, data } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["categories"],//naming the queryKey is arbitrary. the most important usage of the queryKey is that it caches the data with the name that we use for the queryKey. The most important difference between the axios and react query is that the speed of react query is more than axios because the react query caches the data with the queryKey and whenever the react query wants to request for data, if the data exists, it doesn't request again, because it caches the data and it reads the data from the cache and whenever the data is changed, it request for getting the data. But the axios each time it requests and because of that the speed is lower than the react query.
     queryFn: () => getCategoriesApi(),
   });
 
