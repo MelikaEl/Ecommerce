@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import getProductsByCategory from "../../../utils/apis/products/getProductsByCategory";
+import ProductGridSkeleton from "../../skeleton/ProductGridSkeleton";
 
 const ProductsByCategoryGrid = ({ id }) => {
   const { isPending, error, data } = useQuery({
@@ -12,6 +13,7 @@ const ProductsByCategoryGrid = ({ id }) => {
 
   return (
     <div className="flex flex-wrap gap-4 px-8 items-center justify-center my-8">
+      {isPending && Array.from("123456").map((i)=><ProductGridSkeleton key={i}/>)/* It shows 6 times the products skeleton */}
       {data &&
         data?.data?.map((product) => (
           <div
