@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import getProductsByCategory from "../../../utils/apis/products/getProductsByCategory";
 import ProductGridSkeleton from "../../skeleton/ProductGridSkeleton";
+import { Link } from "react-router-dom";
 
 const ProductsByCategoryGrid = ({ id }) => {
   const { isPending, error, data } = useQuery({
@@ -9,7 +10,7 @@ const ProductsByCategoryGrid = ({ id }) => {
     queryFn: () => getProductsByCategory(id),
   });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="flex flex-wrap gap-4 px-8 items-center justify-center my-8">
@@ -21,7 +22,8 @@ const ProductsByCategoryGrid = ({ id }) => {
       }
       {data &&
         data?.data?.map((product) => (
-          <div
+          <Link
+            to={`/products/${product?.id}`}
             key={product?.id}
             className="rounded-xl flex flex-col shadow-lg gap-4 items-center justify-center pb-4 w-5/12 lg:w-3/12 "
           >
@@ -57,7 +59,7 @@ In summary, cleaning the URL ensures that it is in a proper format for use in th
             />
             <p>{product?.title}</p>
             <p>{product?.price}$</p>
-          </div>
+          </Link>
         ))}
     </div>
   );
