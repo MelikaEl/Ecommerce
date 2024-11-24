@@ -55,6 +55,9 @@ The removal of certain characters from the image URL using the `replace` method 
    - By removing these characters, you prevent potential issues with the browser's interpretation of the URL, which could otherwise result in images not loading correctly.
 
 In summary, cleaning the URL ensures that it is in a proper format for use in the `src` attribute, which is crucial for the correct display of images in a web application.
+
+
+The way that the backend save the image URL may not be compatible with the way that the browser show the image, so by this replace method on image, we do something that the image URL be compatible with the browser and browser show the image correctly. 
             */
             />
             <p>{product?.title}</p>
