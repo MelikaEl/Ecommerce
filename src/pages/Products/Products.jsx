@@ -26,16 +26,23 @@ const Products = () => {
           <>
             <img
               className="w-[15rem] h-[15rem] rounded-xl"
-              src={data?.data?.images[activeImageIndex].replace(/^["[]+|["\]]/g, "")}
-             /* src={data?.data?.images[0].replace(/^["[]+|["\]]/g, "")}*/ //this code images[0] shows the first image
+              src={data?.data?.images[activeImageIndex].replace(
+                /^["[]+|["\]]/g,
+                ""
+              )}
+              /* src={data?.data?.images[0].replace(/^["[]+|["\]]/g, "")}*/ //this code images[0] shows the first image
             />
             <div className="flex gap-2 flex-wrap">
-              {data?.data?.images.map((image,index) => (
+              {data?.data?.images.map((image, index) => (
                 <img
-                  onClick={()=>setActiveImageIndex(index)}
+                  onClick={() => setActiveImageIndex(index)}
                   key={image}
                   src={image.replace(/^["[]+|["\]]/g, "")}
-                  className="w-[5rem] h-[5rem] rounded-xl"
+                  className={`w-[5rem] h-[5rem] rounded-xl border-4 ${
+                    index == activeImageIndex
+                      ? "border-slate-400 shadow-lg"
+                      : "border-transparent shadow-lg"
+                  }`}
                 />
               ))}
             </div>
