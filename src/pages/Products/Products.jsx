@@ -19,7 +19,7 @@ const Products = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4 px-16">
         {isPending && <ProductSkeleton />}
         {error && <ErrorOnFetchApi />}
         {data && (
@@ -38,17 +38,17 @@ const Products = () => {
                   onClick={() => setActiveImageIndex(index)}
                   key={image}
                   src={image.replace(/^["[]+|["\]]/g, "")}
-                  className={`w-[5rem] h-[5rem] rounded-xl border-4 ${
+                  className={`w-[5rem] h-[5rem] rounded-xl border-4 cursor-pointer ${
                     index == activeImageIndex
-                      ? "border-slate-400 shadow-lg"
+                      ? "border-slate-400 shadow-lg "
                       : "border-transparent shadow-lg"
                   }`}
                 />
               ))}
             </div>
-            <div className="bg-slate-400 animate-pulse w-[5rem] h-[1.5rem] rounded-xl"></div>
-            <div className="bg-slate-400 animate-pulse w-[5rem] h-[1.5rem] rounded-xl"></div>
-            <div className="bg-slate-400 animate-pulse w-[15rem] h-[5rem] rounded-xl"></div>
+            <p className="font-bold text-xl">{data?.data?.title}</p>
+            <p className="text-xl">{data?.data?.price} $</p>
+            <p className="text-xl">{data?.data?.description}</p>
           </>
         )}
       </div>
