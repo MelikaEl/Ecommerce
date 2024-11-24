@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getProductById from "../../utils/apis/products/getProductById";
@@ -8,6 +8,7 @@ import ErrorOnFetchApi from "../../components/common/ErrorOnFetchApi";
 
 const Products = () => {
   const { id } = useParams() || ""; // get id from params and if the id doesn't exist, makes it empty
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["productById"],
@@ -25,11 +26,13 @@ const Products = () => {
           <>
             <img
               className="w-[15rem] h-[15rem] rounded-xl"
-              src={data?.data?.images[0].replace(/^["[]+|["\]]/g, "")}
+              src={data?.data?.images[activeImageIndex].replace(/^["[]+|["\]]/g, "")}
+             /* src={data?.data?.images[0].replace(/^["[]+|["\]]/g, "")}*/ //this code images[0] shows the first image
             />
             <div className="flex gap-2 flex-wrap">
-              {data?.data?.images.map((image) => (
+              {data?.data?.images.map((image,index) => (
                 <img
+                  onClick={()=>setActiveImageIndex(index)}
                   key={image}
                   src={image.replace(/^["[]+|["\]]/g, "")}
                   className="w-[5rem] h-[5rem] rounded-xl"
