@@ -21,11 +21,24 @@ const getRefreshToken = async () => {
 
 export const apiClient = axios.create({
   baseURL: "https://api.escuelajs.co/api/v1",
-  headers: {
-    // the headers of the API requests append additional data and here the additional data is the token
-    Authorization: `Bearer ${await getAccessToken()}`,
-  },
+  // headers: {
+  /* the headers of the API requests append additional data and here the additional data is the token*/
+  //   Authorization: `Bearer ${await getAccessToken()}`,
+  // }, it gives error when we deployed it on the vercel
 });
+
+apiClient.interceptors.request.use(
+  async (config) => {
+    const access_token = await getAccessToken();
+    if (access_token) {
+      config.headers["Authorization"] = `Bearer ${access_token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 apiClient.interceptors.response.use(
   //here we use interceptors for handling the refresh token because the interceptors are use for making changes in the API requests. Here we apply a rule for when the access tokens are expired, we get the refresh tokens.
@@ -99,9 +112,7 @@ Note: I notice that in your code, `originalRequest._retry=true` appears twice in
         return Promise.reject(error);
       }
     }
-    return Promise.reject(
-      error
-    ); 
+    return Promise.reject(error);
     /*The Promise.reject(error) is used in error handling to properly propagate errors through the Promise chain. Here's why it's important:
     Purpose:
     It creates a rejected Promise with the given error
