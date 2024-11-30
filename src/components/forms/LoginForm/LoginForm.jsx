@@ -129,14 +129,19 @@ export const apiClient = axios.create({
   };
 
   return (
-    //the default for the tailwind classes is for the size of the mobile
     <form
       onSubmit={handleSubmit(async (data) => await handleLogin(data))}
-      className="border-2 rounded-xl shadow-md p-4  lg:w-[30%] w-[80%]"
+      className="border-2 rounded-xl shadow-md p-4 lg:w-[30%] w-[80%]"
     >
+      <div className="mb-4 p-3 bg-slate-100 rounded-lg text-slate-700 text-sm">
+      Please use this email address and password to log in. <br/>
+      email address: john@mail.com <br/>
+      password: changeme
+      </div>
+
       <fieldset
         disabled={isSubmitting}
-        /*disabled={false} All inputs are enabled */ className="flex flex-col gap-4"
+        className="flex flex-col gap-4"
       >
         <input
           {...register(
